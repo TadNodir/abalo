@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ab_articlecategory', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary();
-            $table->string('ab_name', 100)->nullable(false)->unique();
+            $table->id();
+            $table->string('ab_name', 100)->unique();
             $table->string('ab_description', 1000)->nullable();
             $table->unsignedBigInteger('ab_parent')->nullable();
             $table->timestamps();
