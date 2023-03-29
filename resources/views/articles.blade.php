@@ -39,7 +39,13 @@
                             <td>{{$item->ab_name}}</td>
                             <td>{{$item->ab_price}}</td>
                             <td>{{$item->ab_description}}</td>
-                            <td><img src="/resources/articelimages/{{$item->id}}.jpg" width="100px" height="100px" alt="{{$item->ab_name}}"></td>
+                            <td>
+                                @if((file_exists("articleImages/$item->id.jpg")))
+                                    <img src="articleImages/{{$item->id}}.jpg" alt="a picture" width="100" height="100">
+                                @else
+                                    <img src="articleImages/{{$item->id}}.png" alt="a picture" width="100" height="100">
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </table>
