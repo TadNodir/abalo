@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('ab_name', 100)->unique();
             $table->string('ab_description', 1000)->nullable();
             $table->unsignedBigInteger('ab_parent')->nullable();
+            $table->foreign('ab_parent')->on('ab_articlecategory')->references('id');
             $table->timestamps();
         });
     }
