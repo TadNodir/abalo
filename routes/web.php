@@ -25,3 +25,5 @@ Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->n
 Route::get('/isloggedin', [App\Http\Controllers\AuthController::class, 'isloggedin'])->name('haslogin');
 
 Route::get('/articles', [\App\Http\Controllers\ArticleController::class, 'search_articles']);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'show']);

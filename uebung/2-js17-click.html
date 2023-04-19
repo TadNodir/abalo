@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Click</title>
+    <style>
+        body {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<button type="button" onclick="changeCol()">Click</button>
+<script>
+    "use strict";
+    function changeCol() {
+        let currentColor = document.body.style.backgroundColor;
+        console.log(currentColor);
+        if (currentColor === "" || currentColor === "green") {
+            document.body.style.backgroundColor = "red";
+        }
+        if (currentColor === "red") {
+            document.body.style.backgroundColor = "yellow";
+        } else if (currentColor === "yellow") {
+            document.body.style.backgroundColor = "green";
+        }
+    }
+</script>
+</body>
+</html>

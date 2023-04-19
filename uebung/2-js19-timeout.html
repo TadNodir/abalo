@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Timeout</title>
+</head>
+<body>
+<script>
+    "use strict";
+    function changeColor() {
+        let color = document.body.style.backgroundColor;
+        if (color === "" || color === "white") {
+            document.body.style.backgroundColor = "red";
+        }
+        if (color === "" || color === "red") {
+            document.body.style.backgroundColor = "white";
+        }
+        setTimeout(changeColor, 1000);
+    }
+
+    changeColor();
+</script>
+</body>
+</html>

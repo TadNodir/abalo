@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mouseover</title>
+    <style>
+        div {
+            text-align: center;
+            height: 300px;
+            width: 200px;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div onmouseover="goGreen(this)" onmouseout="goWhite(this)">
+</div>
+<script>
+    "use strict";
+    function goGreen(x) {
+        x.style.backgroundColor = "green";
+    }
+    function goWhite(x) {
+        x.style.backgroundColor = "white";
+    }
+</script>
+</body>
+</html>
