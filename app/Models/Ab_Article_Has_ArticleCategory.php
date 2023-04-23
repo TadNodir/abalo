@@ -9,6 +9,9 @@ class Ab_Article_Has_ArticleCategory extends Model
 {
     use HasFactory;
 
+    protected $table = 'ab_article_has_articlecategory';
+    public $timestamps = false;
+
     public function article(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Ab_Article::class);

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Browser</title>
+</head>
+<body>
+<script>
+    "use strict";
+    let browser = window.navigator.userAgent;
+    let browserName;
+    if (browser.match(/chrome|chromium|crios/i)) {
+        browserName = "chrome";
+    }
+    else if (browser.match(/firefox|fxios/i)) {
+        browserName = "firefox";
+    }
+    else if (browser.match(/edg/i)) {
+        browserName = "edge";
+    }
+    else if (browser.match(/safari/i)) {
+        browserName = "safari";
+    }
+    else {
+        browserName = "unknown browser";
+    }
+
+    console.log(browserName)
+
+</script>
+</body>
+</html>

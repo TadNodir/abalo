@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cookie</title>
+</head>
+<body>
+<script>
+    "use strict";
+    // get the cookie value with the given name
+    function getCookie(name) {
+        let cookieName = name + "=";
+        let cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.indexOf(cookieName) === 0) {
+                return cookie.substring(cookieName.length, cookie.length);
+            }
+        }
+        return null;
+    }
+
+    // set the cookie here
+    let counter = getCookie("counter");
+    if (counter === null) {
+        document.cookie = "counter=0;";
+    } else {
+        counter = parseInt(counter);
+        counter++;
+        document.cookie = "counter=" + counter.toString();
+    }
+    console.log(document.cookie);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CreateElement</title>
+</head>
+<body id="body">
+<!--<form>-->
+<!--    <label for="name">Name:</label>-->
+<!--    <input type="text" id="name" name="name" value="name">-->
+<!--    <label for="age">Age:</label>-->
+<!--    <select name="age" id="age">-->
+<!--        <option value="23">23</option>-->
+<!--        <option value="24">24</option>-->
+<!--    </select>-->
+<!--    <input type="submit" name="submit" value="Submit">-->
+<!--</form>-->
+<script>
+    "use strict";
+    let forms = document.createElement("form");
+    let label1 = document.createElement("label");
+    label1.setAttribute("for", "name");
+    label1.innerText = "Name:";
+    let input1 = document.createElement("input");
+    input1.setAttribute("type", "text");
+    input1.setAttribute("id", "name");
+    input1.setAttribute("name", "name");
+    let label2 = document.createElement("label");
+    label2.setAttribute("for", "age");
+    label2.innerText = "Age:";
+    let dropDown = document.createElement("select");
+    dropDown.setAttribute("name", "age");
+    dropDown.setAttribute("id", "age");
+    let opt1 = document.createElement("option");
+    opt1.setAttribute("value", "23");
+    opt1.text = "23";
+    let opt2 = document.createElement("option");
+    opt2.setAttribute("value", "24");
+    opt2.text = "24";
+    dropDown.append(opt1, opt2);
+    forms.append(label1, input1, label2, dropDown);
+    document.getElementById("body").append(forms);
+</script>
+</body>
+</html>

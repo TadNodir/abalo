@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Objekte</title>
+</head>
+<body>
+<script>
+    "use strict";
+    class Car {
+        constructor(name, type) {
+            this._name = name;
+            this._type = type;
+        }
+        get name() {
+            return this._name;
+        }
+        set name(name){
+            this._name = name;
+        }
+        get type() {
+            return this._type;
+        }
+        set type(type) {
+            this._type = type;
+        }
+        writeToConsole() {
+            console.log("Class: name=" + this._name + ", type=" + this._type);
+        }
+    }
+
+    let car = {
+        name: "Mercedes Benz",
+        type: "GT R"
+    }
+
+    function Fkt_car(name, type) {
+        this.name = name;
+        this.type = type;
+        this.getName = function () {
+            return this.name;
+        }
+        this.setName = function (name){
+            this.name = name;
+        }
+        this.getType = function () {
+            return this.type;
+        }
+        this.setType = function (type) {
+            this.type = type;
+        }
+        this.writeToConsole = function () {
+            console.log("Function: name=" + this.name + ", type=" + this.type);
+        }
+    }
+
+    let cls = new Car("Mercedes Benz", "GT R");
+    cls.writeToConsole();
+    let fkt = new Fkt_car("Mercedes Benz", "GT R");
+    fkt.writeToConsole();
+    let attr1 = car.name;
+    let attr2 = car.type;
+    console.log("Attribute: name=" + attr1 + ", type=" + attr2);
+</script>
+</body>
+</html>

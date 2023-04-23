@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM get</title>
+</head>
+<body>
+<main>
+    <p id="Idea">This is an element by id</p>
+    <article id="articleID" class="Article Klasse">This is an element by class</article>
+    <h1 id="h1ID">This is by tag</h1>
+    <b name="name">Name text</b>
+</main>
+<script>
+    "use strict";
+    let byId = document.getElementById("Idea");
+    byId.innerText = "OKKKayyy";
+    let byClass = document.getElementsByClassName("Article Klasse");
+    byClass.item(0).innerHTML = "<b>Text</b>";
+    let byTag = document.getElementsByTagName("h1");
+    byTag.item(0).innerText = "Changed the h1 tag";
+    let byName = document.getElementsByName("name");
+    byName.item(0).innerHTML = "<h3>Überschrift</h3>"
+    console.log(byId);
+    console.log(byClass);
+    console.log(byTag);
+    console.log(byName);
+</script>
+</body>
+</html>

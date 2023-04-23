@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Overlay</title>
+    <style>
+        #overlay {
+            position: absolute;
+            display: none;
+            bottom: 0;
+            width: 200px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<div id="overlay">Here it is!</div>
+<h2 id="text">Want to see an overlay text?</h2>
+<button onclick="overlay()">Show an overlay</button>
+<script>
+    "use strict";
+    function overlay() {
+        if (document.getElementById("overlay").style.display === "block") {
+            document.getElementById("overlay").style.display = "none";
+        } else {
+            document.getElementById("overlay").style.display = "block";
+        }
+    }
+</script>
+</body>
+</html>
