@@ -6,27 +6,13 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
     <title>Homepage</title>
-    <style>
-        .dropdown-content {
-            display: none;
-            position: absolute;
-        }
-
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-    </style>
     <!-- Scripts -->
     @vite(['public/js/navMenu.js', 'public/js/cookiecheck.js'])
 </head>
 <body>
+<nav id="navId"></nav>
+<article id="articleId"></article>
 </body>
 </html>
