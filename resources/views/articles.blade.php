@@ -27,36 +27,36 @@
             <input type="submit" name="submit" value="Suchen">
         </form>
         <div>
-            @if(isset($_GET['submit']))
-                <div class="table-responsive">
-                    <table class="table table-hover">
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>price</th>
+                        <th>description</th>
+                        <th>picture</th>
+                    </tr>
+                    @foreach($article as $value => $item)
                         <tr>
-                            <th>id</th>
-                            <th>name</th>
-                            <th>price</th>
-                            <th>description</th>
-                            <th>picture</th>
+                            <td>{{$item->id}}</td>
+                            <td>{{$item->ab_name}}</td>
+                            <td>{{$item->ab_price}}</td>
+                            <td>{{$item->ab_description}}</td>
+                            <td>
+                                @if((file_exists("articleImages/$item->id.jpg")))
+                                    <img src="articleImages/{{$item->id}}.jpg" alt="a picture" width="100"
+                                         height="100">
+                                @else
+                                    <img src="articleImages/{{$item->id}}.png" alt="a picture" width="100"
+                                         height="100">
+                                @endif
+                            </td>
                         </tr>
-                        @foreach($article as $value => $item)
-                            <tr>
-                                <td>{{$item->id}}</td>
-                                <td>{{$item->ab_name}}</td>
-                                <td>{{$item->ab_price}}</td>
-                                <td>{{$item->ab_description}}</td>
-                                <td>
-                                    @if((file_exists("articleImages/$item->id.jpg")))
-                                        <img src="articleImages/{{$item->id}}.jpg" alt="a picture" width="100"
-                                             height="100">
-                                    @else
-                                        <img src="articleImages/{{$item->id}}.png" alt="a picture" width="100"
-                                             height="100">
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
-                </div>
-            @endif
+                    @endforeach
+                </table>
+            </div>
+
         </div>
     </main>
 </div>
