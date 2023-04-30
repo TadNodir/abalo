@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Periodic</title>
 </head>
 <body>
-$END$
+<div id="message"></div>
+<script>
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "/uebung/3-ajax1-static.html");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                let text = xhr.responseText;
+                window.setInterval(() => {
+                    text = Math.random().toString(36).substring(2, 7);
+                    document.getElementById("message").textContent = text;
+                }, 3000);
+            } else {
+                document.getElementById("message").innerText = xhr.statusText;
+            }
+        }
+    };
+    xhr.onerror = function () {
+        document.getElementById("message").innerText = xhr.statusText;
+    }
+    xhr.send();
+</script>
+
 </body>
 </html>
+
