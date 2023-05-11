@@ -21,7 +21,7 @@
 <article id="articleId"></article>
 <div id="app" class="mt-5">
     <main id="mainForm" class="py-4">
-        <form method="get" action="{{url('/articles')}}">
+        <form method="get" action="{{url('/api/articles')}}">
             <label for="search">Artikel suchen: </label>
             <input type="text" name="searchArticle" id="search">
             <input type="submit" name="submit" value="Suchen">

@@ -6,7 +6,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
     <title>New Article</title>
     <!-- Scripts -->
     @vite(['public/js/newarticle.js'])

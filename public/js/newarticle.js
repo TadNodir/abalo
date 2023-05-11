@@ -5,11 +5,12 @@ document.body.onload = saveNewArticle;
 function saveNewArticle() {
 // create a form element
     const form = document.createElement('form');
-    form.method = "GET";
+    form.method = "POST";
     form.action = "/newarticle";
 
     let csrfToken = document.getElementById("csrf-token");
     let myToken = document.createElement("input");
+    myToken.id = "csrf-token2"
     myToken.type = "hidden";
     myToken.name = "_token";
     myToken.value = csrfToken.dataset.token;
@@ -56,51 +57,52 @@ function saveNewArticle() {
     submitBtn.setAttribute("id", "button");
     submitBtn.innerText = "Speichern";
 
-    submitBtn.addEventListener('click' ,function (e) {
-        sendData(e);
-    });
-
     const output = document.createElement("p");
+    output.setAttribute("id", "output");
 
-// add input fields to the form
+    // add input fields to the form
     form.append(myToken, legend, nameLabel, nameInput, br, priceLabel, priceInput, br1, descriptionLabel,
         descriptionInput, br2, br3, submitBtn);
     document.body.append(form, output);
 
-
-    function sendData(e) {
-
+    submitBtn.addEventListener('click' ,e => {
+        e.preventDefault();
         const name = document.getElementById("name").value.trim();
         const price = parseFloat(document.getElementById("price").value);
+        const description = document.getElementById("description").value;
+        sendData(name, price, description);
+        return false;
+    });
 
+    function sendData(name, price, description) {
         if (!name || price <= 0) {
-            e.preventDefault();
             alert('Please enter a valid name and price greater than 0.');
-            output.innerText = "";
+            document.getElementById("output").innerText = "";
         } else {
             let xhr = new XMLHttpRequest();
-            const data = "name=" + encodeURIComponent(name) + "&price=" + encodeURIComponent(price) + "&description=" + encodeURIComponent(descriptionInput.value);
-
+            xhr.open('POST', '/newarticle');
+            xhr.setRequestHeader("X-CSRF-TOKEN", document.getElementById("csrf-token2").getAttribute('value'));
+            let formdata = new FormData();
+            formdata.append("name", name);
+            formdata.append("price", price.toString());
+            formdata.append("description", description);
+            const output = document.getElementById("output");
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         console.log(xhr.responseText);
-                        output.innerText = "A form successfully submitted";
+                        output.innerHTML = JSON.parse(xhr.responseText).success;
                         output.style.color = "green";
                     } else {
                         console.log(xhr.statusText);
-                        output.innerText = "Error occurred on state 4";
+                        output.innerText = "FEHLER!";
                         output.style.color = "red";
                     }
                 }
             };
-            xhr.onerror = function () {
-                console.log(xhr.statusText);
-                output.innerText = "Error occurred";
-                output.style.color = "red";
-            };
-            xhr.open("GET", '/newarticle?' + data);
-            xhr.send();
+            xhr.send(formdata);
         }
     }
 }
+
+

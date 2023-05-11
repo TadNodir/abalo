@@ -7,16 +7,13 @@
 <body>
 <div id="message"></div>
 <script>
+    window.setInterval(() => {
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", "/uebung/3-ajax1-static.html");
+    xhr.open("GET", "/public/static/message.json");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-                let text = xhr.responseText;
-                window.setInterval(() => {
-                    text = Math.random().toString(36).substring(2, 7);
-                    document.getElementById("message").textContent = text;
-                }, 3000);
+                document.getElementById("message").innerText = JSON.parse(this.responseText).message;
             } else {
                 document.getElementById("message").innerText = xhr.statusText;
             }
@@ -26,6 +23,7 @@
         document.getElementById("message").innerText = xhr.statusText;
     }
     xhr.send();
+    }, 3000);
 </script>
 
 </body>

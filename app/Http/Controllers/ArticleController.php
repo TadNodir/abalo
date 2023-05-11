@@ -22,15 +22,24 @@ class ArticleController extends Controller
         return view('articles', ['article' => $result]);
     }
 
-    public function showNewArticle(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function search_articles_api(Request $request): \Illuminate\Http\JsonResponse
     {
-        return view('newArticle');
+        $input = "";
+        if (isset($_GET['searchArticle'])) {
+            if ($_GET['searchArticle'] != null) {
+                $input = htmlspecialchars($_GET['searchArticle']);
+            }
+        }
+
+        $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
+        return response()->json(['article' => $result]);
     }
+
 
     /**
      * @throws ValidationException
      */
-    public function saveArticle(Request $request): \Illuminate\Http\RedirectResponse
+    public function saveArticle(Request $request): \Illuminate\Http\JsonResponse
     {
         $this->validate($request, [
             'name' => 'required|max:80',
@@ -39,7 +48,6 @@ class ArticleController extends Controller
         ]);
 
         $lastArticle = Ab_Article::all()->last();
-
         Ab_Article::create([
             'id' => $lastArticle->id + 1,
             'ab_name' => $request->name,
@@ -49,6 +57,14 @@ class ArticleController extends Controller
             'ab_createdate' => Carbon::now()->toDateTimeString()
         ]);
 
-        return redirect()->route('articles');
+        return response()->json(['success' => 'Erfolgreich']);
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    public function showNewArticle(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    {
+        return view('newArticle');
     }
 }
