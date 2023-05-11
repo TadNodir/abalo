@@ -60,6 +60,27 @@ class ArticleController extends Controller
         return response()->json(['success' => 'Erfolgreich']);
     }
 
+    public function saveArticle_api(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $this->validate($request, [
+            'name' => 'required|max:80',
+            'price' => 'required|numeric|gt:0',
+            'description' => 'max:1000'
+        ]);
+
+        $id = Ab_Article::all()->last()->id + 1;
+        Ab_Article::create([
+            'id' => $id,
+            'ab_name' => $request->name,
+            'ab_price' => $request->price,
+            'ab_description' => $request->description,
+            'ab_creator_id' => 1,
+            'ab_createdate' => Carbon::now()->toDateTimeString()
+        ]);
+
+        return response()->json(['id' => $id]);
+    }
+
     /**
      * @throws ValidationException
      */

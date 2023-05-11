@@ -6,7 +6,7 @@ function saveNewArticle() {
 // create a form element
     const form = document.createElement('form');
     form.method = "POST";
-    form.action = "/newarticle";
+    form.action = "/api/articles";
 
     let csrfToken = document.getElementById("csrf-token");
     let myToken = document.createElement("input");
@@ -80,7 +80,7 @@ function saveNewArticle() {
             document.getElementById("output").innerText = "";
         } else {
             let xhr = new XMLHttpRequest();
-            xhr.open('POST', '/newarticle');
+            xhr.open('POST', '/api/articles');
             xhr.setRequestHeader("X-CSRF-TOKEN", document.getElementById("csrf-token2").getAttribute('value'));
             let formdata = new FormData();
             formdata.append("name", name);
@@ -91,7 +91,7 @@ function saveNewArticle() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         console.log(xhr.responseText);
-                        output.innerHTML = JSON.parse(xhr.responseText).success;
+                        output.innerHTML = JSON.parse(xhr.responseText).id;
                         output.style.color = "green";
                     } else {
                         console.log(xhr.statusText);
