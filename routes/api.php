@@ -17,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/articles', [\App\Http\Controllers\ArticleController::class,'search_articles_api']);
+
+Route::post('/articles', [App\Http\Controllers\ArticleController::class, 'saveArticle_api']);
+
+Route::post('/shoppingcart', [App\Http\Controllers\ArticleController::class, 'saveInCard_api']);
+
+Route::delete('/shoppingcart', [App\Http\Controllers\ArticleController::class, 'deleteFromCard_api']);

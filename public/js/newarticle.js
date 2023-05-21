@@ -1,14 +1,16 @@
 "use strict";
 
 document.body.onload = saveNewArticle;
+
 function saveNewArticle() {
 // create a form element
     const form = document.createElement('form');
     form.method = "POST";
-    form.action = "/articles";
+    form.action = "/api/articles";
 
     let csrfToken = document.getElementById("csrf-token");
     let myToken = document.createElement("input");
+    myToken.id = "csrf-token2"
     myToken.type = "hidden";
     myToken.name = "_token";
     myToken.value = csrfToken.dataset.token;
@@ -48,31 +50,59 @@ function saveNewArticle() {
     descriptionInput.style.margin = "10px";
     const br3 = document.createElement("br");
 
-// create submit button
-    const submitBtn = document.createElement('input');
-    submitBtn.setAttribute("type", "submit");
-    submitBtn.setAttribute("name", "submit");
-    submitBtn.setAttribute("id", "submit");
-    submitBtn.setAttribute("value", "Speichern");
+    // using button instead of submit
+    const submitBtn = document.createElement('button');
+    submitBtn.setAttribute("type", "button");
+    submitBtn.setAttribute("name", "button");
+    submitBtn.setAttribute("id", "button");
+    submitBtn.innerText = "Speichern";
 
-// add input fields to the form
+    const output = document.createElement("p");
+    output.setAttribute("id", "output");
+
+    // add input fields to the form
     form.append(myToken, legend, nameLabel, nameInput, br, priceLabel, priceInput, br1, descriptionLabel,
         descriptionInput, br2, br3, submitBtn);
+    document.body.append(form, output);
 
-    form.onsubmit = function (e) {
+    submitBtn.addEventListener('click' ,e => {
+        e.preventDefault();
+        const name = document.getElementById("name").value.trim();
+        const price = parseFloat(document.getElementById("price").value);
+        const description = document.getElementById("description").value;
+        sendData(name, price, description);
+        return false;
+    });
 
-        const name = nameInput.value.trim();
-        const price = parseFloat(priceInput.value);
-
+    function sendData(name, price, description) {
         if (!name || price <= 0) {
-            e.preventDefault();
             alert('Please enter a valid name and price greater than 0.');
+            document.getElementById("output").innerText = "";
+        } else {
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/articles');
+            xhr.setRequestHeader("X-CSRF-TOKEN", document.getElementById("csrf-token2").getAttribute('value'));
+            let formdata = new FormData();
+            formdata.append("name", name);
+            formdata.append("price", price.toString());
+            formdata.append("description", description);
+            const output = document.getElementById("output");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        console.log(xhr.responseText);
+                        output.innerHTML = JSON.parse(xhr.responseText).id;
+                        output.style.color = "green";
+                    } else {
+                        console.log(xhr.statusText);
+                        output.innerText = "FEHLER!";
+                        output.style.color = "red";
+                    }
+                }
+            };
+            xhr.send(formdata);
         }
-
-        // perform form submission or data processing here
-        console.log('Form submitted:', name, price, descriptionInput.value);
-    };
-
-// add the form to the page
-    document.body.appendChild(form);
+    }
 }
+
+

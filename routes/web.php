@@ -28,6 +28,6 @@ Route::get('/articles', [App\Http\Controllers\ArticleController::class, 'search_
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'show']);
 
-Route::get('/newarticle', [App\Http\Controllers\ArticleController::class, 'showNewArticle']);
+Route::post('/newarticle', [App\Http\Controllers\ArticleController::class, 'saveArticle']);
 
-Route::post('/articles', [App\Http\Controllers\ArticleController::class, 'saveArticle']);
+Route::get('/newarticle', [App\Http\Controllers\ArticleController::class, 'showNewArticle']);
