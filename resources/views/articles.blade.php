@@ -39,7 +39,7 @@
                     </tr>
                     @foreach($article as $value => $item)
                         <tr>
-                            <td>{{$item->id}}</td>
+                            <td id="{{$item->id}}">{{$item->id}}</td>
                             <td>{{$item->ab_name}}</td>
                             <td>{{$item->ab_price}}</td>
                             <td>{{$item->ab_description}}</td>
@@ -56,7 +56,6 @@
                     @endforeach
                 </table>
             </div>
-
         </div>
     </main>
 </div>

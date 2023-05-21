@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ab_Article;
+use App\Models\Ab_shoppingcart;
+use App\Models\Ab_shoppingcart_item;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -68,6 +70,7 @@ class ArticleController extends Controller
             'description' => 'max:1000'
         ]);
 
+
         $id = Ab_Article::all()->last()->id + 1;
         Ab_Article::create([
             'id' => $id,
@@ -79,6 +82,68 @@ class ArticleController extends Controller
         ]);
 
         return response()->json(['id' => $id]);
+    }
+
+    public function saveInCard_api(Request $request) {
+
+        //TODO: check a cart if exists with the help of user id
+        //
+
+        $user = $request->creator_id;
+//        dd($request);
+        $article = $request->article_id;
+
+        var_dump($article);
+//        $cart_id = Ab_ShoppingCart::query()->select("id")->where('ab_creator_id', $user);
+        $cart_id = DB::table('ab_shoppingcart')
+            ->selectRaw('CAST(id AS bigint)')
+            ->where('ab_creator_id', $user)
+            ->value('id');
+        if (!is_null($cart_id)) {
+
+            $cart_id = Ab_ShoppingCart::all()->last()->id + 1;
+
+            Ab_ShoppingCart::create([
+                'id' => $cart_id,
+                'ab_creator_id' => $user,
+                'ab_createdate' => Carbon::now()->toDateTimeString()
+            ]);
+        } else {
+            $cart_id = 1;
+            $item_id = Ab_shoppingcart_item::all()->last();
+            if ($item_id == 0) {
+                $item_id = 1;
+            } else {
+                $item_id = Ab_shoppingcart_item::all()->last()->id + 1;
+            }
+            Ab_shoppingcart_item::create([
+                'id' => $item_id,
+                'ab_shoppingcart_id' => $cart_id,
+                'ab_article_id' => $article,
+                'ab_createdate' => Carbon::now()->toDateTimeString()
+            ]);
+        }
+
+        return response()->json([
+            "success" => "Erfolg"
+        ]);
+    }
+
+    public function deleteFromCard_api(Request $request) {
+
+        $this->validate($request, [
+
+        ]);
+
+        Ab_shoppingcart::create([
+
+        ]);
+
+        Ab_shoppingcart_item::create([
+
+        ]);
+
+        return response()->json([]);
     }
 
     /**
