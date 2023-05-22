@@ -24,7 +24,7 @@ class ArticleController extends Controller
         return view('articles', ['article' => $result]);
     }
 
-    public function search_articles_api(Request $request): \Illuminate\Http\JsonResponse
+    public function search_articles_api(Request $request): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
     {
         $input = "";
         if (isset($_GET['searchArticle'])) {
@@ -34,7 +34,7 @@ class ArticleController extends Controller
         }
 
         $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
-        return response()->json(['article' => $result]);
+        return view('articles', ['article' => $result]);
     }
 
 

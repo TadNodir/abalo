@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Array</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div id="app">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+        <tr v-for="product in products">
+            <td> {{product.name}} </td>
+            <td> {{product.price}} </td>
+        </tr>
+    </table>
+</div>
+<script>
+
+    let vm = Vue.createApp({
+        data() {
+            return {
+                products: [
+                    {name: "Reifen", price: 8290},
+                    {name: "Antenne drehbar. Leicht geknickt", price: 1400},
+                    {name: "Opel Kadett C 1992 – wie neu", price: 150000}
+                ]
+            };
+        }
+    }).mount('#app');
+
+    let addBtn = document.createElement("button");
+    addBtn.setAttribute("id", "btn");
+    addBtn.innerText = "Schaltflaeche";
+
+    addBtn.onclick = function () {
+        vm.$data.products.push({price: 45, name: "Radio - UKW"})
+    }
+
+    document.getElementById("app").appendChild(addBtn)
+</script>
+</body>
+</html>

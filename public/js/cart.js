@@ -1,5 +1,32 @@
 "use strict";
 
+Vue.createApp({
+    methods: {
+        showResults: function () {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            console.log(filter.length)
+            if(filter.length < 3) {
+                return;
+            }
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
+}).mount('#app');
+
+
 const user = 1;
 const cartDiv = document.createElement("div");
 cartDiv.setAttribute("class", "m-5 border-top border-left border-right border-bottom");
@@ -11,8 +38,7 @@ const main = document.getElementById("mainForm");
 main.parentNode.insertBefore(cartDiv, main);
 
 const rowsTr = document.getElementsByTagName("tr");
-const am = rowsTr.length;
-for(let i = 1; i < am; i++) {
+for(let i = 1; i < rowsTr.length; i++) {
     const wrapTd = document.createElement("td");
     const plus = document.createElement("input");
     plus.setAttribute("type", "submit");
@@ -33,31 +59,32 @@ for(let i = 1; i < am; i++) {
     const lastTr = document.getElementsByTagName("tr")[i];
     const lastTd = lastTr.getElementsByTagName("td")[4];
     lastTd.after(wrapTd);
-    const article_id = document.getElementById(i.toString()).innerText;
+    // const article_id = document.getElementById(i.toString()).innerText;
     plus.addEventListener('click', function () {
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api/shoppingcart');
-        xhr.setRequestHeader('content-type', 'application/json');
+        // let xhr = new XMLHttpRequest();
+        // xhr.open('POST', '/api/shoppingcart');
+        // xhr.setRequestHeader('content-type', 'application/json');
         // xhr.setRequestHeader("X-CSRF-TOKEN", document.getElementById("csrf-token").getAttribute('value'));
-        let formdata = new FormData();
+        // let formdata = new FormData();
 
-        console.log("User:" + user.toString())
-        console.log("Artcl:" + article_id)
-        formdata.append("creator_id", user.toString());
-        formdata.append("article_id", article_id);
+        // console.log("User:" + user.toString())
+        // console.log("Artcl:" + article_id)
+        // formdata.append("creator_id", user.toString());
+        // formdata.append("article_id", article_id);
 
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    console.log(JSON.parse(xhr.responseText));
-                } else {
-                    console.log(xhr.statusText);
-                }
-            }
-        };
-        console.log(formdata);
-        xhr.send(formdata);
+        // xhr.onreadystatechange = function () {
+        //     if (xhr.readyState === 4) {
+        //         if (xhr.status === 200) {
+        //             console.log(JSON.parse(xhr.responseText));
+        //         } else {
+        //             console.log(xhr.statusText);
+        //         }
+        //     }
+        // };
+        // // console.log(formdata);
+        // xhr.send(formdata);
 
+        console.log("Plus")
         plus.remove();
         wrapTd.appendChild(minus);
         lastTd.after(wrapTd);
