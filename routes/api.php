@@ -25,3 +25,5 @@ Route::post('/articles', [App\Http\Controllers\ArticleController::class, 'saveAr
 Route::post('/shoppingcart', [App\Http\Controllers\ArticleController::class, 'saveInCard_api']);
 
 Route::delete('/shoppingcart', [App\Http\Controllers\ArticleController::class, 'deleteFromCard_api']);
+
+Route::get('/newsite', [App\Http\Controllers\ArticleController::class, 'newSite_api']);

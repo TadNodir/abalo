@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Component</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div id="app">
+    <click-change></click-change>
+</div>
+
+<script type="module">
+    import ClickChange from './components/4-vue7-component.js';
+    let vm = Vue.createApp({
+        components: {
+            ClickChange
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>

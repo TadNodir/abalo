@@ -1,30 +1,7 @@
 "use strict";
 
-Vue.createApp({
-    methods: {
-        showResults: function () {
-            var input, filter, table, tr, td, i;
-            input = document.getElementById("search");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("myTable");
-            tr = table.getElementsByTagName("tr");
-            console.log(filter.length)
-            if(filter.length < 3) {
-                return;
-            }
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1];
-                if (td) {
-                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
-    }
-}).mount('#app');
+
+
 
 
 const user = 1;
@@ -100,3 +77,28 @@ for(let i = 1; i < rowsTr.length; i++) {
         oneBefore.appendChild(lastTr);
     });
 }
+
+Vue.createApp({
+    methods: {
+        showResults: function () {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            if(filter.length < 3) {
+                return;
+            }
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
+}).mount('#app');

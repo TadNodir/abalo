@@ -1,27 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>Articles</title>
+    <title>NewSite-Abalo</title>
     <script src="https://unpkg.com/vue@next"></script>
-    <!-- Fonts -->
+
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'public/js/navMenu.js', 'public/js/cookiecheck.js', 'public/js/cart.js'])
+    @vite(['public/js/navMenu.js', 'public/js/cookiecheck.js', 'public/js/cart.js', 'public/js/app.js'])
 </head>
 <body>
 <nav id="navId"></nav>
 <article id="articleId"></article>
 <div id="app" class="mt-5">
     <main id="mainForm" class="py-4">
-        <form method="get" action="{{url('/api/articles')}}">
+        <form method="get" action="{{url('/api/newsite')}}">
             <label for="search">Artikel suchen: </label>
             <input type="text" name="searchArticle" id="search" v-on:input="showResults">
             <input type="submit" name="submit" value="Suchen">
@@ -55,8 +53,22 @@
                     @endforeach
                 </table>
             </div>
+            <site-header></site-header>
+            <site-body></site-body>
+            <site-footer></site-footer>
         </div>
     </main>
+
 </div>
+
+<script type="module">
+    import {SiteHeader, SiteBody, SiteFooter} from '/js/app.js';
+    let vm = Vue.createApp({
+        components: {
+            SiteHeader, SiteBody, SiteFooter
+        }
+    }).mount('#tableApp');
+</script>
+
 </body>
 </html>

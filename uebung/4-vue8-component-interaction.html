@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interaction</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+<div id="app">
+    <component-interaction name="Animal Farm" author="George Orwell" @click-it="changeName"></component-interaction>
+</div>
+<script type="module">
+    // Komponente A
+    import ComponentInteraction from './components/4-vue8-component-interaction.js';
+
+    let vm = Vue.createApp({
+        components: {
+            ComponentInteraction
+        },
+        methods: {
+            changeName: function (name, author) {
+                console.log("The feedback about the book was collected.")
+
+            }
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>

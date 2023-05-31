@@ -153,4 +153,17 @@ class ArticleController extends Controller
     {
         return view('newArticle');
     }
+
+    public function newSite_api(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    {
+        $input = "";
+        if (isset($_GET['searchArticle'])) {
+            if ($_GET['searchArticle'] != null) {
+                $input = htmlspecialchars($_GET['searchArticle']);
+            }
+        }
+
+        $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
+        return view('newsite', ['article' => $result]);
+    }
 }
