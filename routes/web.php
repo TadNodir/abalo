@@ -31,3 +31,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'show']);
 Route::post('/newarticle', [App\Http\Controllers\ArticleController::class, 'saveArticle']);
 
 Route::get('/newarticle', [App\Http\Controllers\ArticleController::class, 'showNewArticle']);
+
+Route::get('/newsite', [App\Http\Controllers\ArticleController::class, 'newSite']);
+

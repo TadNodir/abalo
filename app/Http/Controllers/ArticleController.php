@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Ramsey\Uuid\Type\Integer;
 
 class ArticleController extends Controller
 {
@@ -154,16 +155,32 @@ class ArticleController extends Controller
         return view('newArticle');
     }
 
-    public function newSite_api(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
+    public function newSite(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
+        $articles_length = 0;
         $input = "";
         if (isset($_GET['searchArticle'])) {
             if ($_GET['searchArticle'] != null) {
                 $input = htmlspecialchars($_GET['searchArticle']);
             }
+            $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
+        } else {
+            if (isset($request['limit']) && isset($request['offset'])) {
+                $limit = (int) $request['limit'];
+                $offset = (int) $request['offset'];
+                $articles_length = DB::select("SELECT COUNT(ab_name) FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
+                $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%') LIMIT '$limit' OFFSET '$offset'");
+
+
+//                $result = Ab_Article::where("ab_name", "ILIKE", '%' . $request['searchArticle'] . '%')
+//                    ->limit($request['limit'])
+//                    ->offset($request['offset'])
+//                    ->get();
+            } else {
+                $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
+            }
         }
 
-        $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
-        return view('newsite', ['article' => $result]);
+        return view('newsite', ['article' => $result, 'article_length' => $articles_length]);
     }
 }
