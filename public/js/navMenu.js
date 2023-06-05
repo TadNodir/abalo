@@ -143,7 +143,7 @@ class NavBar {
     }
 }
 
-const navData = ['Home', 'Kategorien', 'Verkaufen', 'Unternehmen'];
+let navData = ['Home', 'Kategorien', 'Verkaufen', 'Unternehmen'];
 const unternehmenData = ['Philosophie', 'Karriere'];
 const navBar = new NavBar("navId", navData, unternehmenData);
 navBar.render();

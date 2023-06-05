@@ -8,11 +8,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Articles</title>
+    <script src="https://unpkg.com/vue@next"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js', 'public/js/navMenu.js', 'public/js/cookiecheck.js', 'public/js/cart.js'])
 </head>
@@ -23,13 +23,12 @@
     <main id="mainForm" class="py-4">
         <form method="get" action="{{url('/api/articles')}}">
             <label for="search">Artikel suchen: </label>
-            <input type="text" name="searchArticle" id="search">
+            <input type="text" name="searchArticle" id="search" v-on:input="showResults">
             <input type="submit" name="submit" value="Suchen">
         </form>
-        <div>
-
+        <div id="tableApp">
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table id="myTable" class="table table-hover">
                     <tr>
                         <th>id</th>
                         <th>name</th>
@@ -45,10 +44,10 @@
                             <td>{{$item->ab_description}}</td>
                             <td>
                                 @if((file_exists("articleImages/$item->id.jpg")))
-                                    <img src="articleImages/{{$item->id}}.jpg" alt="a picture" width="100"
+                                    <img src="/articleImages/{{$item->id}}.jpg" alt="a picture" width="100"
                                          height="100">
                                 @else
-                                    <img src="articleImages/{{$item->id}}.png" alt="a picture" width="100"
+                                    <img src="/articleImages/{{$item->id}}.png" alt="a picture" width="100"
                                          height="100">
                                 @endif
                             </td>
