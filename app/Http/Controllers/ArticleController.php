@@ -163,12 +163,12 @@ class ArticleController extends Controller
             if ($_GET['searchArticle'] != null) {
                 $input = htmlspecialchars($_GET['searchArticle']);
             }
+//            $articles_length = DB::select("SELECT COUNT(ab_name) FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
             $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
         } else {
             if (isset($request['limit']) && isset($request['offset'])) {
                 $limit = (int) $request['limit'];
                 $offset = (int) $request['offset'];
-                $articles_length = DB::select("SELECT COUNT(ab_name) FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
                 $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%') LIMIT '$limit' OFFSET '$offset'");
 
 
@@ -180,7 +180,7 @@ class ArticleController extends Controller
                 $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
             }
         }
-
+        $articles_length = count($result);
         return view('newsite', ['article' => $result, 'article_length' => $articles_length]);
     }
 }

@@ -128,7 +128,7 @@ export default {
                             </tr>
                             </tbody>
                         </table>
-                        <pagination v-if="searchArticle === null" :article_length="art_length" :limit="limit" @pageSlider="changePage"></pagination>
+                        <pagination v-if="searchArticle === null" :art_length="article_length" :limit="limit" @pageSlider="changePage"></pagination>
                     </div>
                 </div>
             </div>
