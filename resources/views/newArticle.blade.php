@@ -8,20 +8,19 @@
     <meta name="csrf-token">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
     <title>New Article</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    @vite(['resources/css/app.scss', 'resources/js/app.js'])
     <!-- Scripts -->
-    @vite(['public/js/newarticle.js'])
 </head>
 <body>
-<script id="csrf-token" data-token="{{ csrf_token() }}" src="{{asset('/js/newarticle.js')}}"></script>
-@error('name')
-<div style="color: red">
-    {{$message}}
+<script id="csrf-token" data-token="{{ csrf_token() }}"></script>
+<div id="bigApp">
+    <new-article></new-article>
 </div>
-@enderror
-@error('price')
-<div style="color: red">
-    {{$message}}
-</div>
-@enderror
+<script type="module">
+</script>
 </body>
 </html>
+<script>
+
+</script>

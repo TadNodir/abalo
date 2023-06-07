@@ -12,35 +12,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <!-- Scripts -->
-{{--    @vite(['public/js/navMenu.js', 'public/js/cookiecheck.js', 'public/js/cart.js'])--}}
+    @vite('resources/js/app.js')
 </head>
 <body>
 <div id="bigApp" class="mt-5">
-    <site-header @update_page="setType('home')"></site-header>
-    <site-body :type="type" article_length="{{json_encode($article_length)}}" articles="{{json_encode($article)}}"></site-body>
-    <site-footer @update_page="setType"></site-footer>
+    <new-site article_length="{{json_encode($article_length)}}" articles="{{json_encode($article)}}"></new-site>
 </div>
-
 <script type="module">
-    import SiteHeader from '/js/components/siteHeader.js';
-    import SiteBody from '/js/components/siteBody.js';
-    import SiteFooter from '/js/components/siteFooter.js';
-    let vm = Vue.createApp({
-        components: {
-            SiteHeader, SiteBody, SiteFooter,
-        },
-        data: function (){
-            return {
-                type: null
-            }
-        },
-        methods: {
-            setType: function (value) {
-                console.log("val: " + value)
-                this.$data.type = value;
-            }
-        }
-    }).mount('#bigApp');
 </script>
 
 </body>
