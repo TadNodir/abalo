@@ -34,7 +34,7 @@ export default {
         }
     },
     template: `
-        <button class="btn text-white bg-dark" v-on:click="prev"> &lt; </button>
-        <span> Page: {{pageSlider}} </span>
-        <button class="btn text-white bg-dark" v-on:click="next"> &gt; </button>`
+        <button class="pagination_btn" v-on:click="prev"> &lt; </button>
+        <span class="pagination_label"> Page: {{pageSlider}} </span>
+        <button class="pagination_btn" v-on:click="next"> &gt; </button>`
 }

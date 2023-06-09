@@ -9,10 +9,10 @@
     <script src="https://unpkg.com/vue@next"></script>
 
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+{{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">--}}
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <!-- Scripts -->
-    @vite('resources/js/app.js')
+    @vite(['resources/css/app.scss', 'resources/js/app.js', 'resources/css/newSiteBody.scss', 'resources/css/newSiteFooter.scss'])
 </head>
 <body>
 <div id="bigApp" class="mt-5">

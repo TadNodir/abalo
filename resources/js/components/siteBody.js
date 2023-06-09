@@ -17,10 +17,10 @@ export default {
                 e.target.setAttribute("value", "-");
                 const lastTd = e.target.parentElement.parentElement.getElementsByTagName("td")[4];
                 lastTd.after(e.target.parentElement);
-                document.getElementById('cart').appendChild(e.target.parentElement.parentElement);
+                document.getElementById('table_cart').appendChild(e.target.parentElement.parentElement);
             } else if (e.target.value === '-') {
                 e.target.setAttribute("value", "+");
-                const oneBefore = document.getElementsByTagName("tbody")[0];
+                const oneBefore = document.getElementsByTagName("tbody")[1];
                 oneBefore.appendChild(e.target.parentElement.parentElement);
             } else {
                 console.log("Cannot add to cart");
@@ -71,20 +71,23 @@ export default {
         this.formAction = '/newsite';
     },
     template: `
-        <div v-if="type !== 'impressum'" id="app" class="mt-5" data-v-app="">
-        <div id="cart" class="m-5 pt-5 border-top border-left border-right border-bottom">
-            <h3 class="d-flex justify-content-center mt-3">Warenkorb</h3>
+        <div v-if="type !== 'impressum'" id="app" class="container" data-v-app="">
+        <div id="cart" class="container--cart">
+            <h3>Warenkorb</h3>
+            <table id="myTable" class="container__table">
+                <tbody id="table_cart"></tbody>
+            </table>
         </div>
-        <main id="mainForm" class="py-4">
-            <form method="get" :action="formAction">
+        <main id="mainForm">
+            <form method="get" class="container--search" :action="formAction">
                 <label for="search">Artikel suchen: </label>
-                <input type="text" name="searchArticle" id="search" v-on:input="showResults">
-                <input type="submit" name="submit" value="Suchen">
+                <input type="text" class="container--search__input" name="searchArticle" id="search" v-on:input="showResults">
+                <input type="submit" class="container--search__button" name="submit" value="Suchen">
             </form>
             <div id="tableApp">
                 <div class="table-responsive">
                     <div v-if="searchArticle !== null">
-                        <table id="myTable" class="table table-hover">
+                        <table id="myTable" class="container__table">
                             <tbody>
                             <tr>
                                 <th>id</th>
@@ -101,13 +104,13 @@ export default {
                                 <td><img id="pic" v-bind:src="'/articleImages/' + article.id + '.jpg'" alt="a picture"
                                          width="100" height="100" @error="changeToPNG"></td>
                                 <td><input type="submit" @click="toggleCart" v-bind:id="'_' + article.id"
-                                           v-bind:name="'_' + article.id" value="+" class="btn text-white bg-dark"></td>
+                                           v-bind:name="'_' + article.id" value="+" class="container__table--button"></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div v-else>
-                        <table id="myTable" class="table table-hover">
+                        <table id="myTable" class="container__table">
                             <tbody>
                             <tr>
                                 <th>id</th>
@@ -124,7 +127,7 @@ export default {
                                 <td><img id="pic" v-bind:src="'/articleImages/' + article.id + '.jpg'" alt="a picture"
                                          width="100" height="100" @error="changeToPNG"></td>
                                 <td><input type="submit" @click="toggleCart" v-bind:id="'_' + article.id"
-                                           v-bind:name="'_' + article.id" value="+" class="btn text-white bg-dark"></td>
+                                           v-bind:name="'_' + article.id" value="+" class="container__table--button"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -136,4 +139,73 @@ export default {
         </div>
         <impressum v-else></impressum>
     `
+
+
+
+
+
+//         <div v-if="type !== 'impressum'" id="app" class="mt-5" data-v-app="">
+//         <div id="cart" class="m-5 pt-5 border-top border-left border-right border-bottom">
+//     <h3 class="d-flex justify-content-center mt-3">Warenkorb</h3>
+// </div>
+// <main id="mainForm" class="py-4">
+//     <form method="get" :action="formAction">
+//     <label for="search">Artikel suchen: </label>
+//     <input type="text" name="searchArticle" id="search" v-on:input="showResults">
+//         <input type="submit" name="submit" value="Suchen">
+//         </form>
+//         <div id="tableApp">
+//             <div class="table-responsive">
+//                 <div v-if="searchArticle !== null">
+//                     <table id="myTable" class="table table-hover">
+//                         <tbody>
+//                         <tr>
+//                             <th>id</th>
+//                             <th>name</th>
+//                             <th>price</th>
+//                             <th>description</th>
+//                             <th>picture</th>
+//                         </tr>
+//                         <tr v-for="article in allArticles">
+//                             <td id="{{article.id}}">{{ article.id }}</td>
+//                             <td>{{ article.ab_name }}</td>
+//                             <td>{{ article.ab_price }}</td>
+//                             <td>{{ article.ab_description }}</td>
+//                             <td><img id="pic" v-bind:src="'/articleImages/' + article.id + '.jpg'" alt="a picture"
+//                                      width="100" height="100" @error="changeToPNG"></td>
+//                             <td><input type="submit" @click="toggleCart" v-bind:id="'_' + article.id"
+//                                 v-bind:name="'_' + article.id" value="+" class="btn text-white bg-dark"></td>
+//                         </tr>
+//                         </tbody>
+//                     </table>
+//                 </div>
+//                 <div v-else>
+//                     <table id="myTable" class="table table-hover">
+//                         <tbody>
+//                         <tr>
+//                             <th>id</th>
+//                             <th>name</th>
+//                             <th>price</th>
+//                             <th>description</th>
+//                             <th>picture</th>
+//                         </tr>
+//                         <tr v-for="article in limitedArticles">
+//                             <td id="{{article.id}}">{{ article.id }}</td>
+//                             <td>{{ article.ab_name }}</td>
+//                             <td>{{ article.ab_price }}</td>
+//                             <td>{{ article.ab_description }}</td>
+//                             <td><img id="pic" v-bind:src="'/articleImages/' + article.id + '.jpg'" alt="a picture"
+//                                      width="100" height="100" @error="changeToPNG"></td>
+//                             <td><input type="submit" @click="toggleCart" v-bind:id="'_' + article.id"
+//                                 v-bind:name="'_' + article.id" value="+" class="btn text-white bg-dark"></td>
+//                         </tr>
+//                         </tbody>
+//                     </table>
+//                     <pagination v-if="searchArticle === null" :art_length="article_length" :limit="limit" @pageSlider="changePage"></pagination>
+//             </div>
+//         </div>
+//     </div>
+// </main>
+// </div>
+// <impressum v-else></impressum>
 }

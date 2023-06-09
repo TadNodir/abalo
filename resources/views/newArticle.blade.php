@@ -6,10 +6,10 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+{{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">--}}
     <title>New Article</title>
     <script src="https://unpkg.com/vue@next"></script>
-    @vite(['resources/css/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.scss', 'resources/js/app.js', 'resources/css/newSiteFooter.scss', 'resources/css/newArticle.scss'])
     <!-- Scripts -->
 </head>
 <body>

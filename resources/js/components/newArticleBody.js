@@ -41,17 +41,17 @@ export default {
         }
     },
     template: `
-        <div class="mt-5 pt-5 text-center">
+        <div class="add-article-form">
         <form method="POST" action="/api/articles">
             <!--        <input id="csrf-token2" type="hidden" name="_token" value="">-->
-            <legend>Please add a new article</legend>
+            <legend >Please add a new article</legend>
             <label class="m-2">Name:</label>
             <input type="text" name="name" id="name" style="margin: 10px;"><br>
             <label class="m-2">Price:</label>
             <input type="number" name="price" id="price" style="margin: 10px;"><br>
             <label class="m-2">Description:</label>
             <textarea name="description" id="description" style="margin: 10px;"></textarea><br><br>
-            <button class="btn text-white bg-dark" type="button" @click="sendData" name="button" id="button">
+            <button class="container--search__button" type="button" @click="sendData" name="button" id="button">
                 Speichern
             </button>
         </form>

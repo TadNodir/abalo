@@ -1,0 +1,57 @@
+@use "sass:math";
+//Feature 1: Variablen
+$primary-color: #343a40;
+$primary-font: 'Lucida Sans';
+$secondary-font: 'Century Gothic';
+$font-color-on-black: white;
+
+body {
+    margin: 0;
+    padding: 0;
+}
+//Feature 2: Verschachtelungen
+.nav {
+    overflow: hidden;
+    background-color: #333;
+    margin-top: 0;
+    padding: 10px;
+
+    &__div-container {
+        // 3. Feature: (Erweiterung) Extend Direktive
+        %common-styling {
+            color: $font-color-on-black;
+            float: left;
+            display: block;
+            text-align: center;
+            padding: 15px 15px;
+            text-decoration: none;
+
+        }
+
+        &__div--brand {
+            @extend %common-styling;
+            // 4. Feature: Operatoren
+            font-size: 2 * 15px;
+            font-family: $secondary-font;
+        }
+        &__ul--branches {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        &__li--elements {
+            @extend %common-styling;
+            font-size: 17px;
+            font-family: $primary-font;
+            &__a {
+                text-decoration: none;
+                color: inherit;
+            }
+            &__dropdown-menu {
+                display: none;
+            }
+        }
+    }
+}
+
+
