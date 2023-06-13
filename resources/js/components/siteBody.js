@@ -54,6 +54,9 @@ export default {
             } else {
                 this.formAction = '/newsite?searchArticle=' + this.$data.searchArticle + '&limit=' + this.$data.limit + '&offset=' + this.$data.offset;
             }
+        },
+        close_tech_improv: function () {
+            document.getElementById("tech_improv").style.display = 'none';
         }
     },
     data: function () {
@@ -71,6 +74,15 @@ export default {
         this.formAction = '/newsite';
     },
     template: `
+        <div id="tech_improv" class="popup">
+        <div class="popup--popup-content">
+            <h2 class="popup__h2">Technische Verbesserungen</h2>
+            <p class="popup__p" id="msg">In Kürze verbessern wir Abalo für Sie!
+                Nach einer kurzen Pause sind wir wieder
+                für Sie da! Versprochen.</p>
+            <button class="popup--close-btn" @click="close_tech_improv">Close</button>
+        </div>
+        </div>
         <div v-if="type !== 'impressum'" id="app" class="container" data-v-app="">
         <div id="cart" class="container--cart">
             <h3>Warenkorb</h3>

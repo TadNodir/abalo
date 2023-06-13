@@ -55,6 +55,13 @@ export default {
         </div>
         </nav>
         <article id="articleId"></article>
+
+<!--        <dropdown visible>-->
+<!--        <span class="link" @click="visible = !visible">click here</span>-->
+<!--        <div slot="dropdown" class="dialog">-->
+<!--            hello world-->
+<!--        </div>-->
+<!--        </dropdown>-->
     `
 
 }

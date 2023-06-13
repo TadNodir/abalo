@@ -18,7 +18,35 @@
 <div id="bigApp" class="mt-5">
     <new-site article_length="{{json_encode($article_length)}}" articles="{{json_encode($article)}}"></new-site>
 </div>
-<script type="module">
+
+<script>
+
+    const socket = new WebSocket('ws://localhost:8080/newsite');
+
+    // Handle the WebSocket connection open event
+    socket.onopen = function() {
+
+        console.log('Connected to the new Site');
+    };
+
+    // Handle the WebSocket connection error event
+    socket.onerror = function(error) {
+        console.error('WebSocket error:', error);
+    };
+
+    // Handle incoming messages
+    socket.onmessage = function(event) {
+        console.log('Message received:', event.data);
+        document.getElementById("tech_improv").style.display = 'flex';
+        document.getElementById("msg").innerText = "In Kürze verbessern wir Abalo für Sie! " +
+        "Nach einer kurzen Pause sind wir wieder " +
+        "für Sie da! Versprochen.";
+    };
+
+    // Handle the WebSocket connection close event
+    socket.onclose = function(event) {
+        console.log('Connection closed:', event.code, event.reason);
+    };
 </script>
 
 </body>
