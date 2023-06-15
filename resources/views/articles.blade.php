@@ -17,7 +17,13 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js', 'public/js/navMenu.js', 'public/js/cookiecheck.js', 'public/js/cart.js'])
 </head>
 <body>
-<nav id="navId"></nav>
+<nav id="navId">
+    @if(isset($user_data))
+        <p style="color: white">Account: {{$user_data['user']}} eingeloggt</p>
+    @else
+        <p style="color: white">Als Gast eingeloggt</p>
+    @endif
+</nav>
 <article id="articleId"></article>
 <div id="app" class="mt-5">
     <main id="mainForm" class="py-4">
@@ -59,4 +65,29 @@
     </main>
 </div>
 </body>
+<script>
+    // Create a new WebSocket connection
+    const socket = new WebSocket('ws://localhost:8000/api/articles/{id}/sold');
+
+    // Handle the WebSocket connection open event
+    socket.onopen = function() {
+        console.log('Connected Articles');
+    };
+
+    // Handle the WebSocket connection error event
+    socket.onerror = function(error) {
+        console.error('WebSocket error:', error);
+    };
+
+    // Handle incoming messages
+    socket.onmessage = function(event) {
+        console.log('Message received:', event.data);
+
+    };
+
+    // Handle the WebSocket connection close event
+    socket.onclose = function(event) {
+        console.log('Connection closed:', event.code, event.reason);
+    };
+</script>
 </html>

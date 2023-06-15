@@ -3,9 +3,9 @@
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . './vendor/autoload.php';
 
-class WebsocketServer implements MessageComponentInterface {
+class WSServer implements MessageComponentInterface {
     protected $clients;
     public function __construct() {
         echo "Constructed\n";
@@ -39,10 +39,10 @@ class WebsocketServer implements MessageComponentInterface {
     }
 }
 
+request()->session()->get('article_id');
 // Run the server application through the WebSocket protocol on port 8080
-$app = new Ratchet\App('localhost', 8080);
-$app->route('/newsite', new WebsocketServer, array('*'));
-$app->route('/echo', new Ratchet\Server\EchoServer, array('*'));
+$app = new Ratchet\App('localhost', 8000);
+$app->route('/api/articles/{id}/sold', new WSServer, array('*'));
 $app->run();
 
 

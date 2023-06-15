@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Ratchet\Client\Connector;
+use Ratchet\Client\WebSocket;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/articles', [App\Http\Controllers\ArticleController::class,'search_articles_api']);
+//Route::get('/articles/{id}', [App\Http\Controllers\ArticleController::class, 'index_api'])->name('articles.index');
+
+Route::get('/articles', [App\Http\Controllers\ArticleController::class,'search_articles_api'])->name('api_articles');
 
 Route::post('/articles', [App\Http\Controllers\ArticleController::class, 'saveArticle_api']);
 
@@ -26,4 +31,5 @@ Route::post('/shoppingcart', [App\Http\Controllers\ArticleController::class, 'sa
 
 Route::delete('/shoppingcart', [App\Http\Controllers\ArticleController::class, 'deleteFromCard_api']);
 
-Route::post('/articles/{id}/sold', [App\Http\Controllers\ArticleController::class,'sold_article']);
+Route::post('/articles/{id}/sold', [App\Http\Controllers\ArticleController::class, 'article_sold_api'])->name("sold");
+

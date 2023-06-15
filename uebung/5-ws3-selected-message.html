@@ -9,7 +9,7 @@
 </body>
 <script>
     // Create a new WebSocket connection
-    const socket = new WebSocket('ws://localhost:8080/chat');
+    const socket = new WebSocket('ws://localhost:8000/api/articles/{id}/sold');
 
     // Handle the WebSocket connection open event
     socket.onopen = function() {
