@@ -34,20 +34,21 @@
 <body>
 <nav id="navId">
     @if(isset($user_data))
-        <p style="color: white">Account <span id="user_data_id">{{$user_data['id']}}</span>: {{$user_data['user']}} eingeloggt</p>
+        <p style="color: white">Account <span id="user_data_id">{{$user_data['id']}}</span>: {{$user_data['user']}}
+            eingeloggt</p>
     @else
         <p style="color: white">Als Gast eingeloggt</p>
     @endif
 </nav>
 <article id="articleId"></article>
 @if(isset($user_data))
-<div id="sold_container" class="container">
-    <h1>Product Notification</h1>
-    <div id="popupLayer" class="popup-layer">
-        <h4 id="productName"></h4>
-        <button class="btn btn-dark" onclick="hidePopup()">Close</button>
+    <div id="sold_container" class="container">
+        <h1>Product Notification</h1>
+        <div id="popupLayer" class="popup-layer">
+            <h4 id="productName"></h4>
+            <button class="btn btn-dark" onclick="hidePopup()">Close</button>
+        </div>
     </div>
-</div>
 @endif
 <div id="app" class="mt-5">
     <main id="mainForm" class="py-4">
@@ -69,29 +70,35 @@
                         <th>sell</th>
                     </tr>
                     @foreach($article as $value => $item)
-                        <tr id="row{{$item->id}}">
-                            <td id="{{$item->id}}">{{$item->id}}</td>
-                            <td>{{$item->ab_name}}</td>
-                            <td>{{$item->ab_price}}</td>
-                            <td>{{$item->ab_description}}</td>
-                            <td>
-                                @if((file_exists("articleImages/$item->id.jpg")))
-                                    <img src="/articleImages/{{$item->id}}.jpg" alt="a picture" width="100"
-                                         height="100">
-                                @else
-                                    <img src="/articleImages/{{$item->id}}.png" alt="a picture" width="100"
-                                         height="100">
+                        @if($item->highlight)
+                            <tr class="font-weight-bold" id="row{{$item->id}}">
+                        @else
+                            <tr id="row{{$item->id}}">
                                 @endif
-                            </td>
-                            <td>
-                                @if(isset($user_data))
-                                    @if(in_array($item, $u_article))
-                                        <button class="btn text-white bg-dark" onclick="sell_article({{$item->id}})">Sell</button>
+                                <td id="{{$item->id}}">{{$item->id}}</td>
+                                <td>{{$item->ab_name}}</td>
+                                <td>{{$item->ab_price}}</td>
+                                <td>{{$item->ab_description}}</td>
+                                <td>
+                                    @if((file_exists("articleImages/$item->id.jpg")))
+                                        <img src="/articleImages/{{$item->id}}.jpg" alt="a picture" width="100"
+                                             height="100">
+                                    @else
+                                        <img src="/articleImages/{{$item->id}}.png" alt="a picture" width="100"
+                                             height="100">
                                     @endif
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
+                                </td>
+                                <td>
+                                    @if(isset($user_data))
+                                        @if(in_array($item, $u_article))
+                                            <button class="btn text-white bg-dark"
+                                                    onclick="sell_article({{$item->id}})">Sell
+                                            </button>
+                                        @endif
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
                 </table>
             </div>
         </div>
@@ -110,7 +117,6 @@
     function sell_article(id) {
         let row = document.getElementById("row" + id);
         row.setAttribute("class", "font-weight-bold");
-        row.style.backgroundColor = "#9ca3af";
         axios.get("/api/articles/" + id + "/sell").then(response => {
             console.log(response);
         }).catch(error => {
@@ -123,20 +129,21 @@
     function hidePopup() {
         document.getElementById("popupLayer").style.display = "none";
     }
+
     // Create a new WebSocket connection
     const socket = new WebSocket('ws://localhost:8080/sold');
 
     // Handle the WebSocket connection open event
-    socket.onopen = function() {
+    socket.onopen = function () {
         console.log('Connected Sold Articles');
     };
 
     // Handle the WebSocket connection error event
-    socket.onerror = function(error) {
+    socket.onerror = function (error) {
         console.error('WebSocket error:', error);
     };
 
-    socket.onmessage = function(event) {
+    socket.onmessage = function (event) {
         const message = JSON.parse(event.data)
         if (parseInt(num) === parseInt(message.u_id)) {
             document.getElementById("productName").innerText = message.text;
@@ -146,23 +153,23 @@
     };
 
     // Handle the WebSocket connection close event
-    socket.onclose = function(event) {
+    socket.onclose = function (event) {
         console.log('Connection closed:', event.code, event.reason);
     };
 
 
     const connect = new WebSocket('ws://localhost:8080/sell');
-    connect.onopen = function() {
+    connect.onopen = function () {
         console.log('Connected Sell Articles');
     };
 
     // Handle the WebSocket connection error event
-    connect.onerror = function(error) {
+    connect.onerror = function (error) {
         console.error('WebSocket Sell error:', error);
     };
 
 
-    connect.onmessage = function(event) {
+    connect.onmessage = function (event) {
         const message = JSON.parse(event.data)
         if (parseInt(num) !== parseInt(message.u_id)) {
             document.getElementById("productName").innerText = message.text;
@@ -171,7 +178,7 @@
         }
     };
 
-    connect.onclose = function(event) {
+    connect.onclose = function (event) {
         console.log('Connection Sell closed:', event.code, event.reason);
     };
 

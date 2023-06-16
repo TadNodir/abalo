@@ -26,7 +26,7 @@ class ArticleController extends Controller
             }
         }
 
-        $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
+        $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%') ORDER BY id");
         return view('articles', ['article' => $result]);
     }
 
@@ -39,10 +39,10 @@ class ArticleController extends Controller
             }
         }
 
-        $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
+        $result = DB::select("SELECT id, ab_name, ab_price, ab_description, highlight FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%') ORDER BY id");
 
         $user_ID = $request->session()->get('abalo_id');
-        $user_article = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE ab_creator_id = ?", [$user_ID]);
+        $user_article = DB::select("SELECT id, ab_name, ab_price, ab_description, highlight FROM ab_article WHERE ab_creator_id = ? ORDER BY id", [$user_ID]);
         if ($request->session()->has('abalo_user')) {
             $r["id"] = $user_ID;
             $r["user"] = $request->session()->get('abalo_user');
@@ -184,12 +184,12 @@ class ArticleController extends Controller
                 $input = htmlspecialchars($_GET['searchArticle']);
             }
 //            $articles_length = DB::select("SELECT COUNT(ab_name) FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
-            $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
+            $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%') ORDER BY id");
         } else {
             if (isset($request['limit']) && isset($request['offset'])) {
                 $limit = (int)$request['limit'];
                 $offset = (int)$request['offset'];
-                $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%') LIMIT '$limit' OFFSET '$offset'");
+                $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%') LIMIT '$limit' OFFSET '$offset' ORDER BY id");
 
 
 //                $result = Ab_Article::where("ab_name", "ILIKE", '%' . $request['searchArticle'] . '%')
@@ -197,7 +197,7 @@ class ArticleController extends Controller
 //                    ->offset($request['offset'])
 //                    ->get();
             } else {
-                $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
+                $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%') ORDER BY id");
             }
         }
         $articles_length = count($result);
@@ -206,7 +206,7 @@ class ArticleController extends Controller
 
     public function index_api($id)
     {
-        $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article");
+        $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article ORDER BY id");
 
         return view('articles', ['article' => $result, 'id' => $id]);
     }
@@ -214,7 +214,7 @@ class ArticleController extends Controller
     public function article_sold_api(Request $request, $id)
     {
 
-        $result = DB::select("SELECT id, ab_name, ab_creator_id FROM ab_article WHERE id = ?", [$id]);
+        $result = DB::select("SELECT id, ab_name, ab_creator_id FROM ab_article WHERE id = ? ORDER BY id", [$id]);
         $user_id = $result[0]->ab_creator_id;
         $article_name = $result[0]->ab_name;
 //        $user_values = DB::select("SELECT id, ab_name, ab_mail FROM ab_user WHERE id = ?", [$user_id]);
@@ -241,7 +241,8 @@ class ArticleController extends Controller
     public function sell_article_api(Request $request, $id) {
 
         $link = "ws://localhost:8080/sell";
-        $result = DB::select("SELECT id, ab_name, ab_creator_id FROM ab_article WHERE id = ?", [$id]);
+        DB::update("UPDATE ab_article SET highlight = true WHERE id = ?", [$id]);
+        $result = DB::select("SELECT id, ab_name, ab_creator_id FROM ab_article WHERE id = ? ORDER BY id", [$id]);
         $user_id = $result[0]->ab_creator_id;
         $article_name = $result[0]->ab_name;
         $notification = "Der Artikel {$article_name} wird nun günstiger angeboten! Greifen Sie schnell zu.";
