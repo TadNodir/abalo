@@ -29,6 +29,7 @@ class AuthController extends Controller
      */
     public function verifyLogin(Request $request)
     {
+        $request->session()->start();
 
         $this->validate($request, [
             'email' => 'required|string|max:200',

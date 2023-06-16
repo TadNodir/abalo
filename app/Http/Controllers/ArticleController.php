@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use MongoDB\Driver\Session;
 use Ramsey\Uuid\Type\Integer;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
@@ -40,8 +41,10 @@ class ArticleController extends Controller
 
         $result = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE LOWER(ab_name) LIKE LOWER('%$input%')");
 
+        $user_ID = $request->session()->get('abalo_id');
+        $user_article = DB::select("SELECT id, ab_name, ab_price, ab_description FROM ab_article WHERE ab_creator_id = ?", [$user_ID]);
         if ($request->session()->has('abalo_user')) {
-            $r["id"] = $request->session()->get('abalo_id');
+            $r["id"] = $user_ID;
             $r["user"] = $request->session()->get('abalo_user');
             $r["time"] = $request->session()->get('abalo_time');
             $r["mail"] = $request->session()->get('abalo_mail');
@@ -49,9 +52,8 @@ class ArticleController extends Controller
         } else {
             $r["auth"] = "false";
         }
-
 //        return response()->json($r);
-        return view('articles', ['article' => $result, 'user_data' => $r]);
+        return view('articles', ['article' => $result, 'user_data' => $r, 'u_article' => $user_article]);
     }
 
 
@@ -213,23 +215,50 @@ class ArticleController extends Controller
     {
 
         $result = DB::select("SELECT id, ab_name, ab_creator_id FROM ab_article WHERE id = ?", [$id]);
+        $user_id = $result[0]->ab_creator_id;
+        $article_name = $result[0]->ab_name;
+//        $user_values = DB::select("SELECT id, ab_name, ab_mail FROM ab_user WHERE id = ?", [$user_id]);
         $request->session()->put('article_id', $id);
         $notification = "Großartig! Ihr Artikel {$result[0]->ab_name} wurde erfolgreich verkauft!";
-        $link = "ws://localhost:8000/api/articles/{$id}/sold";
+        $link = "ws://localhost:8080/sold";
 
-//            require __DIR__ . './vendor/autoload.php';
-        \Ratchet\Client\connect($link)->then(function ($conn) use ($notification) {
-            $conn->on('message', function ($msg) use ($conn) {
-                echo "Received: {$msg}\n";
+            \Ratchet\Client\connect($link)->then(function ($conn) use ($notification, $article_name, $user_id, $id) {
+                $msg_arr = [
+                    "article" => $article_name,
+                    "text" => $notification,
+                    "type" => "sold",
+                    'u_id' => $user_id
+                ];
+                $conn->send(json_encode($msg_arr));
                 $conn->close();
+            }, function ($e) {
+                echo "Could not connect: {$e->getMessage()}\n";
             });
-            $conn->send($notification);
+
+        return response()->json(['user_id' => $user_id, 'article_id' => $id]);
+    }
+
+    public function sell_article_api(Request $request, $id) {
+
+        $link = "ws://localhost:8080/sell";
+        $result = DB::select("SELECT id, ab_name, ab_creator_id FROM ab_article WHERE id = ?", [$id]);
+        $user_id = $result[0]->ab_creator_id;
+        $article_name = $result[0]->ab_name;
+        $notification = "Der Artikel {$article_name} wird nun günstiger angeboten! Greifen Sie schnell zu.";
+
+        \Ratchet\Client\connect($link)->then(function ($conn) use ($notification, $article_name, $user_id) {
+            $msg_arr = [
+                "article" => $article_name,
+                "text" => $notification,
+                "type" => "sell",
+                'u_id' => $user_id
+            ];
+            $conn->send(json_encode($msg_arr));
             $conn->close();
         }, function ($e) {
             echo "Could not connect: {$e->getMessage()}\n";
         });
 
-        return response()->json(['message' => 'Article marked as sold']);
-
+        return response()->json(['selling_art_id' => $id]);
     }
 }

@@ -1,10 +1,11 @@
 import Impressum from './impressum.js';
 import Pagination from "./pagination.js";
+import Vue3Autocounter from 'vue3-autocounter/dist/vue3-autocounter.ssr';
 
 export default {
     props: ['articles', 'type', 'article_length'],
     components: {
-        Impressum, Pagination
+        Impressum, Pagination, 'vue3-autocounter': Vue3Autocounter,
     },
     emits: [''],
     methods: {
@@ -13,13 +14,16 @@ export default {
         },
         toggleCart: function (e) {
             console.log(e.target.value)
+            const price = parseInt(e.target.parentNode.parentNode.children[2].innerHTML)
             if (e.target.value === '+') {
                 e.target.setAttribute("value", "-");
+                this.sum = this.sum + price
                 const lastTd = e.target.parentElement.parentElement.getElementsByTagName("td")[4];
                 lastTd.after(e.target.parentElement);
                 document.getElementById('table_cart').appendChild(e.target.parentElement.parentElement);
             } else if (e.target.value === '-') {
                 e.target.setAttribute("value", "+");
+                this.sum = this.sum - price
                 const oneBefore = document.getElementsByTagName("tbody")[1];
                 oneBefore.appendChild(e.target.parentElement.parentElement);
             } else {
@@ -67,7 +71,8 @@ export default {
             'offset': 0,
             'art_length': JSON.parse(this.article_length),
             'searchArticle': null,
-            formAction: ''
+            formAction: '',
+            'sum': 0
         }
     },
     mounted() {
@@ -89,6 +94,12 @@ export default {
             <table id="myTable" class="container__table">
                 <tbody id="table_cart"></tbody>
             </table>
+            <div>
+
+                <vue3-autocounter ref='counter' :startAmount='0' :endAmount='sum' :duration='3' prefix='' suffix='EUR'
+                                  separator=',' decimalSeparator='.' :decimals='2' :autoinit='true'
+                                  @finished='alert(\`Counting finished!\`)'/>
+            </div>
         </div>
         <main id="mainForm">
             <form method="get" class="container--search" :action="formAction">
@@ -150,6 +161,7 @@ export default {
         </main>
         </div>
         <impressum v-else></impressum>
+
     `
 
 

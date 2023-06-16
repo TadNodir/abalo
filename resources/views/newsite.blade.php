@@ -51,3 +51,9 @@
 
 </body>
 </html>
+<script>
+    import {GoogleSignInButton} from "vue3-google-signin";
+    export default {
+        components: {GoogleSignInButton}
+    }
+</script>

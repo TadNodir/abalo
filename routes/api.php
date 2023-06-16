@@ -33,3 +33,5 @@ Route::delete('/shoppingcart', [App\Http\Controllers\ArticleController::class, '
 
 Route::post('/articles/{id}/sold', [App\Http\Controllers\ArticleController::class, 'article_sold_api'])->name("sold");
 
+Route::get('/articles/{id}/sell', [App\Http\Controllers\ArticleController::class, 'sell_article_api'])->name("sell");
+

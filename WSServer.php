@@ -39,10 +39,10 @@ class WSServer implements MessageComponentInterface {
     }
 }
 
-request()->session()->get('article_id');
 // Run the server application through the WebSocket protocol on port 8080
-$app = new Ratchet\App('localhost', 8000);
-$app->route('/api/articles/{id}/sold', new WSServer, array('*'));
+$app = new Ratchet\App('localhost', 8080);
+$app->route('/sold', new WSServer, array('*'));
+$app->route('/sell', new WSServer, array('*'));
 $app->run();
 
 
