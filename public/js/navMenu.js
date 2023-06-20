@@ -81,6 +81,10 @@ class NavBar {
         this.barHeader.innerText = "abalo";
         this.unList = document.createElement("ul");
         this.unList.setAttribute("class", "navbar-nav");
+        this.logout = document.createElement("a");
+        this.logout.innerText = "Logout";
+        this.logout.setAttribute("class", "font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500");
+        this.logout.setAttribute("href", "/logout");
         this.createNavItems();
     }
 
@@ -137,7 +141,7 @@ class NavBar {
     }
 
     render() {
-        this.container.append(this.barHeader, this.unList);
+        this.container.append(this.barHeader, this.unList, this.logout);
         this.navBar.appendChild(this.container);
         this.addToggleEvent();
     }

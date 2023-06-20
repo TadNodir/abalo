@@ -1,0 +1,15 @@
+@use 'app';
+.footer {
+    text-align: center;
+    &--button {
+        cursor: pointer;
+        font-family: app.$primary-font;
+        text-decoration: none;
+        color: app.$primary-color;
+    }
+}
+
+.impressum {
+    font-family: app.$secondary-font;
+    text-align: center;
+}

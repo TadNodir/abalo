@@ -13,8 +13,8 @@ export default {
     },
     template: `
         <hr>
-        <footer class="text-center">
-        <p><a href="mailto:tadnodir99@gmail.com">{{kontakt}}</a>&nbsp|&nbsp<a @click="setImpressum">{{impressum}}</a></p>
+        <footer class="footer">
+        <p><a class="footer--button" href="mailto:tadnodir99@gmail.com">{{kontakt}}</a>&nbsp|&nbsp<a class="footer--button" @click="setImpressum">Impressum</a></p>
         <p>&copy; 2023 Abalo. All rights reserved.</p>
         </footer>
   `

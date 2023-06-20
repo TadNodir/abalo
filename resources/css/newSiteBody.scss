@@ -1,0 +1,143 @@
+@use 'app';
+%common-button {
+    background-color: app.$primary-color;
+    color: app.$font-color-on-black;
+    font-family: app.$primary-font;
+    padding: 4px;
+    font-size: 17px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+%common-button:hover {
+    background-color: #9ca3af;
+}
+.container {
+    margin: 3vw;
+
+    &--cart {
+        margin: 3vw;
+        padding: 3vw;
+        text-align: center;
+        border-radius: 5px;
+        border: solid;
+        // 5. Feature: Module
+        font-family: app.$primary-font;
+    }
+    &--search {
+        font-family: app.$secondary-font;
+        &__input {
+            border: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: #f2f2f2;
+            padding: 7px;
+            margin: 5px;
+            border-radius: 3px;
+            width: 250px;
+            font-size: 14px;
+        }
+        &__button {
+            @extend %common-button;
+        }
+    }
+    &__table {
+        width: 100%;
+        border-collapse: collapse;
+        th {
+            padding: 10px;
+            font-weight: bold;
+            text-align: left;
+            font-family: app.$secondary-font;
+        }
+
+        /* Style the table rows */
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody td {
+            padding: 10px;
+            font-family: app.$primary-font;
+        }
+
+        /* Add hover effect on table rows */
+        tbody tr:hover {
+            background-color: #eaf2fa;
+        }
+
+        &--button {
+            @extend %common-button;
+            height: 3vw;
+            width: 3vw;
+            font-size: 25px;
+        }
+    }
+}
+
+.pagination_btn {
+    @extend %common-button;
+    height: 2vw;
+    width: 2vw;
+    margin: 1.5vw;
+}
+.pagination_label {
+    margin: 1.5vw;
+    font-family: app.$primary-color;
+    font-size: 1.2vw;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    //display: flex;
+    justify-content: center;
+    align-items: center;
+    &--popup-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 400px;
+        text-align: center;
+    }
+    &__h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        font-family: app.$secondary-font;
+    }
+
+    &__p {
+        font-size: 16px;
+        margin-bottom: 20px;
+        font-family: app.$primary-font;
+    }
+
+    &--close-btn {
+        background-color: #ccc;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: app.$secondary-font;
+    }
+
+    &--close-btn:hover {
+        background-color: #999;
+    }
+}
+
+
+
+
+
+
+
+
